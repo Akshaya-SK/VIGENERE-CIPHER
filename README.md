@@ -30,7 +30,53 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
+// Converts character to A–Z (0–25)
+int charToInt(char ch) {
+    return toupper(ch) - 'A';
+}
+
+// Converts number (0–25) to uppercase letter
+char intToChar(int num) {
+    return (num % 26) + 'A';
+}
+
+int main() {
+    char text[100], key[100], newKey[100], cipher[100];
+    int i, len;
+
+    printf("Enter plaintext: ");
+    scanf("%s", text);
+
+    printf("Enter keyword: ");
+    scanf("%s", key);
+
+    // Convert both to uppercase
+    for (i = 0; text[i]; i++) text[i] = toupper(text[i]);
+    for (i = 0; key[i]; i++) key[i] = toupper(key[i]);
+
+    len = strlen(text);
+
+    // Repeat keyword to match text length
+    for (i = 0; i < len; i++)
+        newKey[i] = key[i % strlen(key)];
+    newKey[len] = '\0';
+
+    // Encrypt
+    for (i = 0; i < len; i++) {
+        cipher[i] = intToChar(charToInt(text[i]) + charToInt(newKey[i]));
+    }
+    cipher[len] = '\0';
+
+    printf("Encrypted Text: %s\n", cipher);
+    return 0;
+}
+```
 ## OUTPUT
+![image](https://github.com/user-attachments/assets/688d4c28-f115-4f0c-845c-58e865a81c94)
 
 ## RESULT
